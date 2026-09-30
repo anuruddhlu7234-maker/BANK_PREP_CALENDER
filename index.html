@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050915" />
+  <meta name="description" content="Competitive exam calendar and daily study command center for IBPS SO IT, IBPS PO, RRB PO, SBI PO and Clerk preparation." />
+  <title>ExamForge • Competitive Exam Command Center</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+
+  <div class="app-shell">
+    <header class="topbar panel-glass">
+      <div class="brand-block">
+        <div class="eyebrow">TARGET MODE • EXAM COMMAND CENTER</div>
+        <div class="brand-title"><span>FOCUS</span> TODAY <em>→</em> <strong>SUCCESS</strong> TOMORROW</div>
+        <div class="brand-subtitle">DISCIPLINE • CONSISTENCY • ANALYSIS • IMPROVEMENT</div>
+        <div class="active-target-strip" id="activeTargetStrip" aria-live="polite">
+          <div class="active-target-list-head">
+            <div>
+              <span class="active-target-label">EXAM COUNTDOWN</span>
+            </div>
+            <span class="active-target-count-label" id="datedExamCount">0 exams</span>
+          </div>
+          <div class="active-target-list" id="datedExamList">
+            <div class="active-target-empty">Add an exam date from <b>+ Add Exam</b> to show its countdown here.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exam-target-widget" id="examWidget">
+        <div class="widget-head">
+          <div>
+            <div class="widget-kicker">ACTIVE EXAM TARGET</div>
+            <div class="widget-caption">Your selected exam stays here until you change it.</div>
+          </div>
+          <button class="icon-btn" id="manageExamsBtn" title="Manage exams">⚙</button>
+        </div>
+        <div class="exam-select-row">
+          <select id="examSelector" aria-label="Select exam"></select>
+          <button class="primary mini-btn" id="addExamBtn">+ Add Exam</button>
+        </div>
+        <div id="selectedExamDetails" class="selected-exam-details"></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-grid">
+        <article class="focus-card panel-glass neon-border">
+          <div class="hero-kicker">FOCUS TODAY</div>
+          <div id="dateTitle" class="hero-date">Loading…</div>
+          <div id="dayTheme" class="hero-theme">Execute the timetable • finish the plan • log the result</div>
+          <div class="hero-actions">
+            <button class="ghost" id="prevDay">← Previous</button>
+            <button class="primary" id="todayBtn">Today</button>
+            <button class="ghost" id="nextDay">Next →</button>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-head"><span>Execution of assigned tasks</span><strong id="dayProgressText">0%</strong></div>
+            <div class="progress"><div id="dayProgressBar"></div></div>
+          </div>
+          <div class="quick-stats">
+            <div><b id="doneCount">0</b><span>Completed</span></div>
+            <div><b id="pendingCount">0</b><span>Pending</span></div>
+            <div><b id="productiveHours">0.0h</b><span>Productive</span></div>
+            <div><b id="streak">0</b><span>85% Streak</span></div>
+          </div>
+          <div class="today-note" id="examFocusNote">Choose an exam target to align today's priority.</div>
+        </article>
+
+        <article class="calendar-card panel-glass">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">MONTH CALENDAR</div>
+              <div class="section-title" id="monthLabel">Month</div>
+            </div>
+            <div class="section-tools">
+              <button class="mini-btn" id="monthPrev">‹</button>
+              <button class="mini-btn" id="jumpMonth">Current</button>
+              <button class="mini-btn" id="monthNext">›</button>
+            </div>
+          </div>
+          <div class="calendar-scroll" aria-label="Monthly calendar">
+            <div class="calendar-head" id="calendarHead"></div>
+            <div class="calendar" id="calendar"></div>
+          </div>
+          <div class="calendar-legend"><span><i class="dot status-done"></i>Day Done</span><span><i class="dot status-missed"></i>Day Missed</span><span><i class="dot partial"></i>Started</span><span><i class="dot selected-dot"></i>Selected</span></div>
+<div class="calendar-help">Double-click / double-tap any date → choose <b>DONE</b>, <b>MISSED</b>, or <b>RESET</b> the day status.</div>
+        </article>
+      </section>
+
+
+      
+
+      <section class="dashboard-grid">
+        <div class="main-col">
+          
+          <article class="panel-glass section-panel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">TODAY'S EXECUTION BOARD</div>
+                <div class="section-title">Assigned Tasks <span class="board-visibility-note">Tap ✓ to finish • double-tap description to edit</span></div>
+              </div>
+              <div class="filters">
+                <button class="filter active" data-filter="all">All</button>
+                <button class="filter" data-filter="pending">Pending</button>
+                <button class="filter" data-filter="done">Done</button>
+              </div>
+            </div>
+            <div class="board-summary" id="boardSummary"></div>
+            <div id="taskList" class="task-list"></div>
+          </article>
+            <article class="panel-glass section-panel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">SMART ASSIGNMENT</div>
+                <div class="section-title">Assign / Reassign Task</div>
+              </div>
+              <span class="muted">Custom assignments stay in your saved progress.</span>
+            </div>
+            <form id="taskForm" class="task-form">
+              <input id="taskTitle" required placeholder="Task title • e.g. 2 DI sets + error log" />
+              <select id="taskSubject">
+                <option>Quant</option>
+                <option>Verbal</option>
+                <option>Logical Reasoning</option>
+                <option>Professional Knowledge</option>
+                <option>Full Mock Test</option>
+                <option>General Awareness</option>
+                <option>Data Science</option>
+                <option>Planning</option>
+                <option>Routine</option>
+                <option>Other</option>
+              </select>
+              <input id="taskMinutes" type="number" min="5" step="5" value="30" aria-label="Minutes" />
+              <select id="taskPriority"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select>
+              <select id="taskTime" aria-label="Assign time slot">
+                <option value="08:00–09:00">08:00–09:00 AM</option>
+                <option value="09:00–11:15">09:00–11:15 AM</option>
+                <option value="11:20–12:30">11:20 AM–12:30 PM</option>
+                <option value="01:45–04:10">01:45–04:10 PM</option>
+                <option value="04:15–05:30">04:15–05:30 PM</option>
+                <option value="05:35–06:30">05:35–06:30 PM</option>
+                <option value="06:30–07:15">06:30–07:15 PM</option>
+                <option value="07:45–08:45">07:45–08:45 PM</option>
+                <option value="08:50–09:50">08:50–09:50 PM</option>
+                <option value="10:00–01:00">10:00 PM–01:00 AM</option>
+                <option value="01:00–02:00">01:00–02:00 AM</option>
+                <option value="CUSTOM">Custom time…</option>
+              </select>
+              <input id="taskCustomTime" class="time-custom hidden" placeholder="e.g. 06:00–06:30 PM" aria-label="Custom time" />
+              <input id="taskTarget" class="full" placeholder="Definition of done / exact target (optional)" />
+              <button class="primary" type="submit">+ Assign To Selected Day</button>
+            </form>
+          </article>
+          <article class="panel-glass section-panel summary-launch-panel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">PROGRESS SUMMARY</div>
+                <div class="section-title">Weekly & Monthly Review</div>
+              </div>
+              <span class="muted">See incomplete tasks, productive time, day results and month productivity.</span>
+            </div>
+            <div class="summary-launch-grid">
+              <button class="summary-launch-btn week" id="openWeeklySummary"><span>▣</span><div><b>WEEKLY SUMMARY</b><small>7-day consistency + productive work</small></div></button>
+              <button class="summary-launch-btn month" id="openMonthlySummary"><span>▤</span><div><b>MONTHLY SUMMARY</b><small>Full month performance + productivity %</small></div></button>
+            </div>
+          </article>
+
+
+          <article class="panel-glass section-panel mock-tracker-panel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">MOCK TEST ANALYSIS</div>
+                <div class="section-title">Record Score • Marks Out Of • Mistakes</div>
+              </div>
+              <span class="muted">Write section-wise scores and mistakes once. Review any mock later by clicking View.</span>
+            </div>
+            <form id="mockForm" class="mock-form">
+              <div class="mock-top-row">
+                <label>Date<input id="mockDate" type="date" required></label>
+                <label>Mock Name<input id="mockName" required placeholder="e.g. IBPS SO IT Mock 07"></label>
+                <label>Mock Type<select id="mockType"><option>Full Mock Test</option><option>Sectional Test</option></select></label>
+              </div>
+              <div class="mock-overall-card">
+                <div><b>OVERALL SCORE</b><small>Use this for the total paper result</small></div>
+                <div class="score-pair"><input id="mockOverallMarks" type="number" min="0" step="0.01" placeholder="Marks"><span>/</span><input id="mockOverallOutOf" type="number" min="1" step="0.01" placeholder="Out of"></div>
+              </div>
+              <div class="section-score-grid">
+                <div class="score-block"><div class="score-block-head"><b>QUANT</b><span>Score</span></div><div class="score-pair"><input id="mockQuantMarks" type="number" min="0" step="0.01" placeholder="Marks"><span>/</span><input id="mockQuantOutOf" type="number" min="0" step="0.01" placeholder="Out of"></div><textarea id="mockQuantMistakes" rows="3" placeholder="Mistakes / weak topics / silly errors..."></textarea></div>
+                <div class="score-block"><div class="score-block-head"><b>VERBAL</b><span>Score</span></div><div class="score-pair"><input id="mockVerbalMarks" type="number" min="0" step="0.01" placeholder="Marks"><span>/</span><input id="mockVerbalOutOf" type="number" min="0" step="0.01" placeholder="Out of"></div><textarea id="mockVerbalMistakes" rows="3" placeholder="RC / grammar / vocab mistakes..."></textarea></div>
+                <div class="score-block"><div class="score-block-head"><b>LOGICAL REASONING</b><span>Score</span></div><div class="score-pair"><input id="mockReasoningMarks" type="number" min="0" step="0.01" placeholder="Marks"><span>/</span><input id="mockReasoningOutOf" type="number" min="0" step="0.01" placeholder="Out of"></div><textarea id="mockReasoningMistakes" rows="3" placeholder="Puzzle approach / arrangement / logic mistakes..."></textarea></div>
+                <div class="score-block"><div class="score-block-head"><b>PROFESSIONAL KNOWLEDGE</b><span>Score</span></div><div class="score-pair"><input id="mockPKMarks" type="number" min="0" step="0.01" placeholder="Marks"><span>/</span><input id="mockPKOutOf" type="number" min="0" step="0.01" placeholder="Out of"></div><textarea id="mockPKMistakes" rows="3" placeholder="Concept gaps / wrong answers / topics to revise..."></textarea></div>
+              </div>
+              <div class="mock-form-actions"><button class="primary" type="submit">+ Save Mock Analysis</button><button class="ghost" id="clearMockForm" type="button">Clear</button></div>
+            </form>
+            <div class="mock-history-head"><div><b>MOCK HISTORY</b><span id="mockHistoryCount">0 saved</span></div><select id="mockHistoryFilter" class="compact-select"><option value="all">All Subjects / Full Mocks</option><option value="Full Mock Test">Full Mock Test</option><option value="Sectional Test">Sectional Test</option></select></div>
+            <div id="mockHistory" class="mock-history"></div>
+          </article>
+          
+        </div>
+
+        <aside class="side-col">
+          <article class="panel-glass section-panel notes-panel" id="notesPanel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">CATEGORY NOTES</div>
+                <div class="section-title">Topics & Coverage</div>
+              </div>
+              <button class="mini-btn" id="addNoteBtn" type="button">＋ Add Notes</button>
+            </div>
+            <div class="notes-toolbar">
+              <label for="notesCategoryFilter">SHOW NOTES</label>
+              <select id="notesCategoryFilter" class="compact-select">
+                <option value="ALL">◉ All Categories</option>
+                <option value="Quant">Σ Quant</option>
+                <option value="Verbal">📖 Verbal</option>
+                <option value="Logical Reasoning">🧠 Logical Reasoning</option>
+                <option value="Professional Knowledge">💻 Professional Knowledge</option>
+                <option value="Full Mock Test">🎯 Full Mock Test</option>
+                <option value="Other">✦ Other</option>
+              </select>
+            </div>
+            <div class="note-category-grid" id="noteCategoryGrid">
+              <button class="note-category-chip note-cat-quant" data-note-category="Quant" type="button"><span>Σ</span>Quant</button>
+              <button class="note-category-chip note-cat-verbal" data-note-category="Verbal" type="button"><span>📖</span>Verbal</button>
+              <button class="note-category-chip note-cat-logical-reasoning" data-note-category="Logical Reasoning" type="button"><span>🧠</span>LR</button>
+              <button class="note-category-chip note-cat-professional-knowledge" data-note-category="Professional Knowledge" type="button"><span>💻</span>PK</button>
+              <button class="note-category-chip note-cat-full-mock-test" data-note-category="Full Mock Test" type="button"><span>🎯</span>Mock</button>
+            </div>
+            <div id="notesList" class="notes-list"></div>
+            <div id="notesEmpty" class="empty notes-empty">Double-click a category or note to focus/edit it. Use <b>＋ Add Notes</b> to record a topic.</div>
+          </article>
+          <article class="panel-glass section-panel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">PRODUCTIVITY MATRIX</div>
+                <div class="section-title">Today's Subject Output</div>
+              </div>
+            </div>
+            <div id="subjectStats"></div>
+          </article>
+
+          <article class="panel-glass section-panel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">LONG-RUN TRACKER</div>
+                <div class="section-title">Overall Subject Productivity</div>
+              </div>
+              <select id="analyticsRange" class="compact-select"><option value="7">7 days</option><option value="30" selected>30 days</option><option value="90">90 days</option><option value="all">All time</option></select>
+            </div>
+            <div id="overallStats"></div>
+          </article>
+
+          <article class="panel-glass section-panel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">WEEKEND / MOCK ENGINE</div>
+                <div class="section-title">Mock Strategy</div>
+              </div>
+            </div>
+            <div class="weekend-box">
+              <div><b>Saturday</b><span>Full Mock 1 + analysis + speed maths → Full Mock 2 + analysis → PK revision</span></div>
+              <div><b>Sunday</b><span>Full Mock 1 + analysis → verbal mocks + LR mocks → recovery</span></div>
+              <div><b>Rule</b><span>Never take the next mock without analysing errors from the previous one.</span></div>
+            </div>
+          </article>
+
+          <article class="panel-glass section-panel">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">DATA / BACKUP</div>
+                <div class="section-title">Portable Progress</div>
+              </div>
+            </div>
+            <div class="cloud-sync-bar">
+              <div>
+                <div class="cloud-sync-title">☁ CLOUD DATA</div>
+                <div class="cloud-sync-status" id="cloudSyncStatus">Checking cloud…</div>
+              </div>
+              <button class="mini-btn" id="syncNowBtn" type="button">↻ Sync Now</button>
+            </div>
+            <div class="data-actions">
+              <button class="ghost fullw" id="saveJson">↓ Export Complete JSON</button>
+              <button class="ghost fullw" id="openJson">↑ Import JSON Backup</button>
+              <button class="danger fullw" id="resetAll">Reset Local Progress</button>
+            </div>
+            <input type="file" accept="application/json" id="jsonFile" hidden />
+            <p class="tiny">Cloud sync is shared across your browsers and devices. Export JSON is still available as a backup.</p>
+          </article>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      <span>EVERY HOUR COUNTS.</span>
+      <span>NO EXCUSES • ONLY RESULTS</span>
+      <span>PLAN → PRACTICE → ANALYSE → IMPROVE</span>
+    </footer>
+  </div>
+
+  <div class="modal-backdrop hidden" id="examModalBackdrop">
+    <div class="modal panel-glass" role="dialog" aria-modal="true" aria-labelledby="examModalTitle">
+      <div class="modal-head">
+        <div>
+          <div class="section-kicker">EXAM TARGET MANAGER</div>
+          <h2 id="examModalTitle">Add Exam</h2>
+        </div>
+        <button class="icon-btn" id="closeExamModal">✕</button>
+      </div>
+      <form id="examForm" class="exam-form">
+        <input type="hidden" id="examId" />
+        <label>Exam Name<input id="examName" required placeholder="e.g. IBPS SO IT 2026" /></label>
+        <div class="date-grid">
+          <label>Prelims Date<input id="prelimsDate" type="date" /></label>
+          <label>Mains Date<input id="mainsDate" type="date" /></label>
+        </div>
+        <label>Target / Note<textarea id="examNote" rows="3" placeholder="e.g. Primary target • focus on IT + Reasoning + Quant"></textarea></label>
+        <div class="modal-actions">
+          <button type="button" class="ghost" id="cancelExam">Cancel</button>
+          <button type="submit" class="primary">Save Exam</button>
+        </div>
+      </form>
+      <div class="saved-exams" id="savedExams"></div>
+    </div>
+  </div>
+
+
+  <div class="modal-backdrop hidden" id="dayStatusBackdrop">
+    <div class="day-status-modal panel-glass" role="dialog" aria-modal="true" aria-labelledby="dayStatusTitle">
+      <div class="modal-head">
+        <div>
+          <div class="section-kicker">DAY RESULT</div>
+          <h2 id="dayStatusTitle">Mark this day</h2>
+          <p class="day-status-subtitle" id="dayStatusSubtitle">Choose the result once. You can change it later by double-tapping the date again.</p>
+        </div>
+        <button class="icon-btn" id="closeDayStatus" type="button">✕</button>
+      </div>
+      <div class="day-status-actions">
+        <button class="day-status-btn done-btn" id="markDayDone" type="button"><span>✓</span><div><b>DONE</b><small>I completed the day as planned</small></div></button>
+        <button class="day-status-btn missed-btn" id="markDayMissed" type="button"><span>✕</span><div><b>MISSED</b><small>I did not complete the day plan</small></div></button>
+        <button class="day-status-btn reset-btn" id="resetDayStatus" type="button"><span>↺</span><div><b>RESET DAY</b><small>Remove the green/red mark only; keep tasks unchanged</small></div></button>
+      </div>
+      <div class="day-status-foot">This is your <b>consistency signal</b>; task completion stays visible separately in the Execution Board.</div>
+    </div>
+  </div>
+<section class="panel-glass section-panel timetable-panel">
+        <div class="section-head timetable-head">
+          <div>
+            <div class="section-kicker">DAILY TIMETABLE</div>
+            <div class="section-title">Exact Time Blocks <span class="board-visibility-note" id="scheduleHint">Today</span></div>
+          </div></div>
+        <div class="timetable-note">Use <b>＋ Plan</b> on a study block only when you want to create a weekly sub-task plan. Double-click the task name to edit the main task.</div>
+        <div id="schedule" class="schedule"></div>
+      </section>
+
+  <div class="modal-backdrop hidden" id="summaryModalBackdrop">
+    <div class="modal panel-glass summary-modal" role="dialog" aria-modal="true" aria-labelledby="summaryModalTitle">
+      <div class="modal-head">
+        <div><div class="section-kicker">PERFORMANCE REVIEW</div><h2 id="summaryModalTitle">Weekly Summary</h2><p class="summary-modal-subtitle" id="summaryModalSubtitle"></p></div>
+        <button class="icon-btn" id="closeSummaryModal" type="button">✕</button>
+      </div>
+      <div id="summaryContent"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="mockViewBackdrop">
+    <div class="modal panel-glass mock-view-modal" role="dialog" aria-modal="true" aria-labelledby="mockViewTitle">
+      <div class="modal-head"><div><div class="section-kicker">MOCK DETAIL</div><h2 id="mockViewTitle">Mock Analysis</h2><p class="summary-modal-subtitle" id="mockViewSubtitle"></p></div><button class="icon-btn" id="closeMockView" type="button">✕</button></div>
+      <div id="mockViewContent"></div>
+    </div>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+<div class="modal-backdrop hidden" id="notesModal">
+  <div class="modal notes-modal">
+    <div class="modal-head">
+      <div><div class="section-kicker">CATEGORY NOTES</div><h2 id="notesModalTitle">Add Note</h2><div class="summary-modal-subtitle">Track covered, incomplete, remaining and unseen topics.</div></div>
+      <button class="icon-btn" type="button" data-close-notes>✕</button>
+    </div>
+    <form id="notesForm" class="notes-form">
+      <label>CATEGORY<select id="noteCategory" required><option value="Quant">Σ Quant</option><option value="Verbal">📖 Verbal</option><option value="Logical Reasoning">🧠 Logical Reasoning</option><option value="Professional Knowledge">💻 Professional Knowledge</option><option value="Full Mock Test">🎯 Full Mock Test</option><option value="Other">✦ Other</option></select></label>
+      <label>TOPIC / NOTE<input id="noteTopic" type="text" placeholder="e.g. Percentage — revise shortcut method" required></label>
+      <label>STATUS<select id="noteStatus" required><option value="covered">✓ Covered</option><option value="incomplete">◐ Incomplete</option><option value="remaining">! Remaining</option><option value="unseen">○ Unseen</option></select></label>
+      <label>DETAILS<textarea id="noteDetails" rows="5" placeholder="Covered topics, remaining chapters, mistakes, revision points..."></textarea></label>
+      <div class="modal-actions"><button class="ghost" type="button" data-close-notes>Cancel</button><button class="primary" type="submit">Save Note</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop hidden" id="taskEditModal">
+  <div class="modal task-editor-modal">
+    <div class="modal-head">
+      <div>
+        <div class="section-kicker">TASK EDITOR</div>
+        <h2>Edit Assigned Task</h2>
+        <div class="summary-modal-subtitle">Double-click the task title or subject whenever you need to study a different subject in that slot.</div>
+      </div>
+      <button class="icon-btn" type="button" id="closeTaskEdit">✕</button>
+    </div>
+
+    <form id="taskEditForm" class="task-edit-form">
+      <label>TASK TITLE
+        <input id="editTaskTitle" required>
+      </label>
+      <label>SUBJECT
+        <select id="editTaskSubject">
+          <option>Quant</option>
+          <option>Verbal</option>
+          <option>Logical Reasoning</option>
+          <option>Professional Knowledge</option>
+          <option>Full Mock Test</option>
+          <option>General Awareness</option>
+          <option>Data Science</option>
+          <option>Planning</option>
+          <option>Routine</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>DESCRIPTION / TARGET
+        <textarea id="editTaskTarget" rows="5"></textarea>
+      </label>
+      <div class="task-edit-grid">
+        <label>TIME
+          <input id="editTaskTime" required>
+        </label>
+        <label>MINUTES
+          <input id="editTaskMinutes" type="number" min="5" step="5" required>
+        </label>
+        <label>PRIORITY
+          <select id="editTaskPriority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button class="ghost" type="button" id="cancelTaskEdit">Cancel</button>
+        <button class="primary" type="submit">✓ Save Task Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+  <div class="modal-backdrop hidden" id="weeklySubtaskModal">
+  <div class="modal weekly-subtask-modal panel-glass" role="dialog" aria-modal="true" aria-labelledby="weeklySubtaskTitle">
+    <div class="modal-head">
+      <div>
+        <div class="section-kicker">WEEKLY SUB-TASK PLAN</div>
+        <h2 id="weeklySubtaskTitle">Quant Aptitude</h2>
+        <div class="weekly-subtask-context" id="weeklySubtaskContext">09:00 AM – 11:15 AM</div>
+      </div>
+      <button class="icon-btn" type="button" id="closeWeeklySubtask">✕</button>
+    </div>
+
+    <div class="weekday-tabs" id="weeklySubtaskDays"></div>
+
+    <div class="weekly-subtask-summary">
+      <span id="weeklySubtaskDayLabel">Monday</span>
+      <strong id="weeklySubtaskMinutes">0 / 135 min</strong>
+    </div>
+
+    <div class="weekly-subtask-list" id="weeklySubtaskList"></div>
+    
+    <form id="weeklySubtaskForm" class="weekly-subtask-form">
+      <input type="hidden" id="weeklySubtaskEditId" value="">
+      <div class="weekly-subtask-input-row">
+        <input id="weeklySubtaskTitleInput" required placeholder="Sub-task e.g. % chapter">
+        <input id="weeklySubtaskMinutesInput" type="number" min="5" step="5" value="45" aria-label="Minutes">
+        <button class="primary mini-btn" type="submit" id="weeklySubtaskSaveBtn">＋ Add</button>
+      </div>
+      <div class="weekly-subtask-foot" id="weeklySubtaskFoot">Sub-tasks repeat every Monday for this time block.</div>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

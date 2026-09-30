@@ -1,0 +1,345 @@
+{
+  "app": {
+    "name": "ExamForge — Competitive Exam Command Center",
+    "version": "5.0.0",
+    "target": [
+      "IBPS SO IT",
+      "IBPS PO",
+      "RRB PO",
+      "SBI PO",
+      "CLERK"
+    ]
+  },
+  "settings": {
+    "weekStart": "monday",
+    "autoOpenToday": true,
+    "dailyTargetPercent": 85
+  },
+  "weekdayPlans": {
+    "1": {
+      "label": "Monday",
+      "quant": [
+        "%",
+        "Ratio",
+        "Average",
+        "Mix DI",
+        "Speed Maths"
+      ],
+      "quantMode": "Concept + timed practice"
+    },
+    "2": {
+      "label": "Tuesday",
+      "quant": [
+        "SDT",
+        "Time & Work",
+        "Partnership",
+        "DI",
+        "Speed Maths"
+      ],
+      "quantMode": "Concept + timed practice"
+    },
+    "3": {
+      "label": "Wednesday",
+      "quant": [
+        "SI & CI",
+        "Boat & Stream",
+        "P & L",
+        "DI",
+        "Speed Maths"
+      ],
+      "quantMode": "Concept + timed practice"
+    },
+    "4": {
+      "label": "Thursday",
+      "quant": [
+        "SDT",
+        "Mensuration",
+        "2 Mock Tests + Analysis",
+        "Speed Maths"
+      ],
+      "quantMode": "Mocks + analysis + speed"
+    },
+    "5": {
+      "label": "Friday",
+      "quant": [
+        "PnC",
+        "Probability",
+        "P & L",
+        "2 Mock Tests + Analysis"
+      ],
+      "quantMode": "Mocks + analysis"
+    }
+  },
+  "weekendPlans": {
+    "6": {
+      "label": "Saturday",
+      "blocks": [
+        [
+          "09:00 AM",
+          "12:30 PM",
+          "Full Mock Test 1 + Analysis + 30 Min Speed Maths",
+          "mock"
+        ],
+        [
+          "08:50 PM",
+          "11:15 PM",
+          "Full Mock Test 2 + Analysis",
+          "mock"
+        ],
+        [
+          "11:15 PM",
+          "01:45 AM",
+          "Professional Knowledge Revision",
+          "pk"
+        ]
+      ]
+    },
+    "0": {
+      "label": "Sunday",
+      "blocks": [
+        [
+          "09:00 AM",
+          "12:30 PM",
+          "Full Mock Test 1 + Analysis + 30 Min Speed Maths",
+          "mock"
+        ],
+        [
+          "01:30 PM",
+          "05:30 PM",
+          "3 Verbal Mock Test + Analysis + 2 L.R Mock Test + Analysis",
+          "english_reasoning"
+        ],
+        [
+          "05:30 PM",
+          "01:30 AM",
+          "Rest + Movies + Relax Mind + Others",
+          "rest"
+        ]
+      ]
+    }
+  },
+  "dailyBlocks": [
+    [
+      "08:00 AM",
+      "09:00 AM",
+      "Fresh, Breakfast, Room and Table Clean",
+      "routine",
+      60
+    ],
+    [
+      "09:00 AM",
+      "11:15 AM",
+      "Quant Aptitude (According to Plan)",
+      "quant",
+      135
+    ],
+    [
+      "11:20 AM",
+      "12:30 PM",
+      "G.A. (Current Affairs)",
+      "gaCurrent",
+      70
+    ],
+    [
+      "12:30 PM",
+      "01:00 PM",
+      "Lunch",
+      "break",
+      30
+    ],
+    [
+      "01:00 PM",
+      "01:30 PM",
+      "Nap",
+      "recovery",
+      30
+    ],
+    [
+      "01:45 PM",
+      "02:15 PM",
+      "R.C. Practice",
+      "englishRC",
+      30
+    ],
+    [
+      "02:15 PM",
+      "03:05 PM",
+      "Grammar / Usage Practice",
+      "englishGrammar",
+      50
+    ],
+    [
+      "04:15 PM",
+      "05:30 PM",
+      "Logical Reasoning Practice",
+      "reasoning",
+      75
+    ],
+    [
+      "05:35 PM",
+      "06:30 PM",
+      "Exercise + Vocab",
+      "exercise",
+      55
+    ],
+    [
+      "06:30 PM",
+      "07:15 PM",
+      "Walk + Static G.A. (Dams, National, International, Govt Schemes etc)",
+      "staticGA",
+      45
+    ],
+    [
+      "07:15 PM",
+      "07:45 PM",
+      "Nap",
+      "recovery",
+      30
+    ],
+    [
+      "07:45 PM",
+      "08:45 PM",
+      "Dinner Plan + G.M. Rules",
+      "planning",
+      60
+    ],
+    [
+      "08:50 PM",
+      "09:50 PM",
+      "Logical Reasoning (B.R., Syllo, CnD, Machine I/O)",
+      "reasoningLate",
+      60
+    ],
+    [
+      "10:00 PM",
+      "01:00 AM",
+      "Professional Knowledge",
+      "pk",
+      180
+    ],
+    [
+      "01:00 AM",
+      "02:00 AM",
+      "Data Science",
+      "dataScience",
+      60
+    ],
+    [
+      "02:00 AM",
+      "08:00 AM",
+      "Sleep",
+      "sleep",
+      360
+    ]
+  ],
+  "taskTemplates": {
+    "routine": [
+      {
+        "title": "Morning reset",
+        "subject": "Routine",
+        "target": "Fresh, Breakfast, Room and Table Clean",
+        "minutes": 60,
+        "priority": "medium"
+      }
+    ],
+    "quant": [
+      {
+        "title": "Quant Aptitude",
+        "subject": "Quant",
+        "target": "Complete today's Quant plan: % • Ratio • Average • Mix DI • Speed Maths",
+        "minutes": 135,
+        "priority": "high"
+      }
+    ],
+    "gaCurrent": [
+      {
+        "title": "G.A. (Current Affairs)",
+        "subject": "General Awareness",
+        "target": "Current affairs reading + notes + important facts",
+        "minutes": 70,
+        "priority": "high"
+      }
+    ],
+    "reasoning": [
+      {
+        "title": "Logical Reasoning Practice",
+        "subject": "Logical Reasoning",
+        "target": "Puzzles + logical sets; record approach, traps and errors",
+        "minutes": 75,
+        "priority": "high"
+      }
+    ],
+    "exercise": [
+      {
+        "title": "Exercise + Vocab",
+        "subject": "Routine",
+        "target": "Exercise + vocabulary revision",
+        "minutes": 55,
+        "priority": "low"
+      }
+    ],
+    "staticGA": [
+      {
+        "title": "Static G.A.",
+        "subject": "General Awareness",
+        "target": "Dams, National, International, Government Schemes and other static G.A.",
+        "minutes": 45,
+        "priority": "medium"
+      }
+    ],
+    "planning": [
+      {
+        "title": "Dinner Plan + G.M. Rules",
+        "subject": "Planning",
+        "target": "Dinner + G.M. Rules + next-day planning",
+        "minutes": 60,
+        "priority": "medium"
+      }
+    ],
+    "reasoningLate": [
+      {
+        "title": "Logical Reasoning — B.R., Syllo, CnD, Machine I/O",
+        "subject": "Logical Reasoning",
+        "target": "Timed reasoning practice for B.R., Syllo, CnD and Machine I/O",
+        "minutes": 60,
+        "priority": "high"
+      }
+    ],
+    "pk": [
+      {
+        "title": "Professional Knowledge",
+        "subject": "Professional Knowledge",
+        "target": "Professional Knowledge study + practice + error log",
+        "minutes": 180,
+        "priority": "high"
+      }
+    ],
+    "dataScience": [
+      {
+        "title": "Data Science",
+        "subject": "Data Science",
+        "target": "Core Data Science concepts + practice + short revision",
+        "minutes": 60,
+        "priority": "high"
+      }
+    ],
+    "englishRC": [
+      {
+        "title": "RC Practice",
+        "subject": "Verbal",
+        "target": "4–6 RC passages: timed reading + error log",
+        "minutes": 30,
+        "priority": "high"
+      }
+    ],
+    "englishGrammar": [
+      {
+        "title": "Grammar / Usage Practice",
+        "subject": "Verbal",
+        "target": "E.S. + E.D. + P.J. practice with mistake analysis",
+        "minutes": 50,
+        "priority": "high"
+      }
+    ]
+  }
+}
